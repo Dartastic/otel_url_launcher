@@ -4,6 +4,7 @@
 import 'package:dartastic_opentelemetry/dartastic_opentelemetry.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import 'url_launcher_semantics.dart';
 import 'url_launcher_suppression.dart';
 
 const _tracerName = 'otel_url_launcher';
@@ -23,7 +24,7 @@ Future<R> tracedUrlLauncherCall<R>({
     attributes: OTel.attributesFromMap(<String, Object>{
       Url.urlFull.key: url.toString(),
       Url.urlScheme.key: url.scheme,
-      'url_launcher.operation': operation,
+      UrlLauncherSemantics.operation.key: operation,
     }),
   );
   try {
@@ -31,7 +32,7 @@ Future<R> tracedUrlLauncherCall<R>({
   } catch (e, st) {
     span.addAttributes(OTel.attributes([
       OTel.attributeString(
-        ErrorResource.errorType.key,
+        ErrorAttributes.errorType.key,
         e.runtimeType.toString(),
       ),
     ]));

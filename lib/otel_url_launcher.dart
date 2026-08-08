@@ -5,4 +5,5 @@
 library;
 
 export 'src/otel_url_launcher.dart';
+export 'src/url_launcher_semantics.dart';
 export 'src/url_launcher_suppression.dart';
