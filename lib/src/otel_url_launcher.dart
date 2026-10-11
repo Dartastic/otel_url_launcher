@@ -1,7 +1,7 @@
 // Licensed under the Apache License, Version 2.0
 // Copyright 2025, Mindful Software LLC, All rights reserved.
 
-import 'package:dartastic_opentelemetry/dartastic_opentelemetry.dart';
+import 'package:dartastic_opentelemetry_api/dartastic_opentelemetry_api.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'url_launcher_semantics.dart';
@@ -9,7 +9,7 @@ import 'url_launcher_suppression.dart';
 
 const _tracerName = 'otel_url_launcher';
 
-Tracer _tracer() => OTel.tracerProvider().getTracer(_tracerName);
+APITracer _tracer() => OTelAPI.tracerProvider().getTracer(_tracerName);
 
 /// Generic helper. Opens a CLIENT span carrying the `url.*` attrs.
 Future<R> tracedUrlLauncherCall<R>({
@@ -21,7 +21,7 @@ Future<R> tracedUrlLauncherCall<R>({
   final span = _tracer().startSpan(
     'url_launcher $operation',
     kind: SpanKind.client,
-    attributes: OTel.attributesFromMap(<String, Object>{
+    attributes: OTelAPI.attributesFromMap(<String, Object>{
       Url.urlFull.key: url.toString(),
       Url.urlScheme.key: url.scheme,
       UrlLauncherSemantics.operation.key: operation,
@@ -30,8 +30,8 @@ Future<R> tracedUrlLauncherCall<R>({
   try {
     return await invoke();
   } catch (e, st) {
-    span.addAttributes(OTel.attributes([
-      OTel.attributeString(
+    span.addAttributes(OTelAPI.attributes([
+      OTelAPI.attributeString(
         ErrorAttributes.errorType.key,
         e.runtimeType.toString(),
       ),
