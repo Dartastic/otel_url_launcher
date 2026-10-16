@@ -1,6 +1,7 @@
 name: otel_url_launcher
-description: OpenTelemetry instrumentation for `package:url_launcher`.
-  Wraps launchUrl / canLaunchUrl with url.* semconv spans.
+description: >-
+  OpenTelemetry instrumentation for url_launcher by Dartastic.io. Adds
+  standard OpenTelemetry observability to applications that use url_launcher.
 version: 0.2.1-wip
 repository: https://github.com/dartastic/otel_url_launcher
 homepage: https://dartastic.io
